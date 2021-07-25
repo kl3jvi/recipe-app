@@ -1,4 +1,4 @@
-package com.example.recipeapp.ui.home
+package com.example.recipeapp.view.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,10 +8,10 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.recipeapp.R
 import com.example.recipeapp.databinding.FragmentHomeBinding
+import com.example.recipeapp.viewmodel.HomeViewModel
 
-class HomeFragment : Fragment() {
+class AllRecipesFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null

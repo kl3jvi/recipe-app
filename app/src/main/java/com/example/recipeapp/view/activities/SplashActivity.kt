@@ -1,8 +1,10 @@
-package com.example.recipeapp
+package com.example.recipeapp.view.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.animation.AnimationUtils
+import android.os.Handler
+import android.os.Looper
 import com.example.recipeapp.databinding.ActivitySplashBinding
 
 class SplashActivity : AppCompatActivity() {
@@ -11,6 +13,10 @@ class SplashActivity : AppCompatActivity() {
         val splashBinding: ActivitySplashBinding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(splashBinding.root)
 
+        Handler(Looper.getMainLooper()).postDelayed({
+            startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+            finish()
+        }, 1000)
 
     }
 }
