@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.recipeapp">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,8 +18,8 @@
         <activity
             android:name=".view.activities.AddUpdateRecipeActivity"
             android:label="Add Recipe"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/Theme.RecipeApp">
+            android:theme="@style/Theme.RecipeApp"
+            android:windowSoftInputMode="adjustPan">
 
         </activity>
         <activity

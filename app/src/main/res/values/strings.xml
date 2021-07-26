@@ -17,4 +17,6 @@
     <string name="title_select_image">Select Image Action</string>
     <string name="lbl_camera">Camera</string>
     <string name="lbl_gallery">Gallery</string>
+
+    <string name="rationale_camera">This app needs access to your camera so you can take pictures.</string>
 </resources>
