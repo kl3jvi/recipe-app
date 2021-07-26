@@ -11,4 +11,6 @@
     <color name="secondaryLightColor">#c1d5e0</color>
     <color name="secondaryDarkColor">#62757f</color>
     <color name="secondaryTextColor">#000000</color>
+    <color name="dish_image_background">#00796B</color>
+    <color name="blue_grey_700">#454A6D</color>
 </resources>
