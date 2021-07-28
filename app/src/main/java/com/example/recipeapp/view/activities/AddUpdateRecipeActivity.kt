@@ -5,27 +5,40 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
+import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.example.recipeapp.R
 import com.example.recipeapp.databinding.ActivityAddUpdateRecipeBinding
 import com.example.recipeapp.databinding.CustomDialogBinding
 import pub.devrel.easypermissions.EasyPermissions
+import java.io.*
+import java.util.*
 
 
 class AddUpdateRecipeActivity : AppCompatActivity(), View.OnClickListener,
     EasyPermissions.PermissionCallbacks {
 
-    private val REQUEST_CODE: Int = 123
-    private lateinit var mBinding: ActivityAddUpdateRecipeBinding
 
+    private lateinit var mBinding: ActivityAddUpdateRecipeBinding
+    private var mImagePath: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityAddUpdateRecipeBinding.inflate(layoutInflater)
@@ -87,9 +100,9 @@ class AddUpdateRecipeActivity : AppCompatActivity(), View.OnClickListener,
     private fun checkCameraPermission() {
         if (hasPermission()) {
             // Have permission, do the thing!
-            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            if (takePictureIntent.resolveActivity(packageManager) != null) { // its always null
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+            val galleryIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            if (galleryIntent.resolveActivity(packageManager) != null) { // its always null
+                startActivityForResult(galleryIntent, REQUEST_IMAGE_CAPTURE)
             }
             println("ckemiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
 
@@ -108,7 +121,13 @@ class AddUpdateRecipeActivity : AppCompatActivity(), View.OnClickListener,
     private fun checkStoragePermission() {
         if (hasPermission()) {
             // Have permission, do the thing!
-            Toast.makeText(this, "TODO: Gallery things", Toast.LENGTH_LONG).show()
+
+            val takePictureIntent =
+                Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            if (takePictureIntent.resolveActivity(packageManager) != null) { // its always null
+                startActivityForResult(takePictureIntent, REQUEST_FILE_GALLERY)
+            }
+
         } else {
             // Ask for one permission
             EasyPermissions.requestPermissions(
@@ -131,17 +150,92 @@ class AddUpdateRecipeActivity : AppCompatActivity(), View.OnClickListener,
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == REQUEST_IMAGE_CAPTURE){
+            if (requestCode == REQUEST_IMAGE_CAPTURE) {
                 data?.extras?.let {
                     val thumbnail: Bitmap = data.extras!!.get("data") as Bitmap
-                    mBinding.ivDishImage.setImageBitmap(thumbnail)
+//                    mBinding.ivDishImage.setImageBitmap(thumbnail)
+                    Glide.with(this)
+                        .load(thumbnail)
+                        .centerCrop()
+                        .placeholder(R.drawable.ic_add)
+                        .into(mBinding.ivDishImage)
+                    mImagePath = saveImageToInternalStorage(thumbnail)
+                    Log.w("image path", mImagePath)
+                    Glide.with(this)
+                        .load(R.drawable.ic_edit)
+                        .placeholder(R.drawable.ic_add)
+                        .into(mBinding.ivAddDishImage)
+
+
                 }
             }
+
+            if (requestCode == REQUEST_FILE_GALLERY) {
+                data?.let {
+                    val selectedPhotoUri = data.data
+                    Glide.with(this)
+                        .load(selectedPhotoUri)
+                        .centerCrop()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .listener(object : RequestListener<Drawable> {
+                            override fun onLoadFailed(
+                                e: GlideException?,
+                                model: Any?,
+                                target: Target<Drawable>?,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                Log.e("TAG", "Error loading image", e)
+                                return false
+                            }
+                            override fun onResourceReady(
+                                resource: Drawable?,
+                                model: Any?,
+                                target: Target<Drawable>?,
+                                dataSource: DataSource?,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                resource?.let {
+                                    val bitmap: Bitmap = resource.toBitmap()
+                                    mImagePath = saveImageToInternalStorage(bitmap)
+                                }
+                                return false
+                            }
+
+                        })
+                        .placeholder(R.drawable.ic_add)
+                        .into(mBinding.ivDishImage)
+
+                    Glide.with(this)
+                        .load(R.drawable.ic_edit)
+                        .placeholder(R.drawable.ic_add)
+                        .into(mBinding.ivAddDishImage)
+
+                }
+            }
+        } else if (resultCode == Activity.RESULT_CANCELED) {
+            Log.e("Cancelled", "User Cancelled images selection")
         }
     }
 
+    private fun saveImageToInternalStorage(bitmap: Bitmap): String {
+        val wrapper = ContextWrapper(applicationContext)
+        var file = wrapper.getDir(IMAGE_DIRECTORY, Context.MODE_PRIVATE)
+        file = File(file, "${UUID.randomUUID()}.jpg")
+        try {
+            val stream: OutputStream = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+            stream.flush()
+            stream.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return file.absolutePath
+    }
 
     companion object {
         private const val REQUEST_IMAGE_CAPTURE = 1
+        private const val REQUEST_FILE_GALLERY = 2
+        private const val REQUEST_CODE: Int = 123
+        private const val IMAGE_DIRECTORY = "RecipesImg"
     }
 }
