@@ -17,8 +17,8 @@ import android.provider.Settings
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -28,6 +28,9 @@ import com.bumptech.glide.request.target.Target
 import com.example.recipeapp.R
 import com.example.recipeapp.databinding.ActivityAddUpdateRecipeBinding
 import com.example.recipeapp.databinding.CustomDialogBinding
+import com.example.recipeapp.databinding.DialogCustomListBinding
+import com.example.recipeapp.utils.Constants
+import com.example.recipeapp.view.adapters.CustomListItemAdapter
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.*
 import java.util.*
@@ -44,13 +47,25 @@ class AddUpdateRecipeActivity : AppCompatActivity(), View.OnClickListener,
         mBinding = ActivityAddUpdateRecipeBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         mBinding.ivAddDishImage.setOnClickListener(this)
+        mBinding.typeEditText.setOnClickListener(this)
+        mBinding.categoryEditText.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         if (v != null) {
             when (v.id) {
+
                 R.id.iv_add_dish_image -> {
                     customImageSelectionDialog()
+                    return
+                }
+
+                R.id.typeEditText -> {
+                    customListItemsDialog(
+                        "Select Dish Type",
+                        Constants.dishTypes(),
+                        Constants.DISH_TYPE
+                    )
                     return
                 }
             }
@@ -104,7 +119,7 @@ class AddUpdateRecipeActivity : AppCompatActivity(), View.OnClickListener,
             if (galleryIntent.resolveActivity(packageManager) != null) { // its always null
                 startActivityForResult(galleryIntent, REQUEST_IMAGE_CAPTURE)
             }
-            println("ckemiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
+
 
         } else {
             // Ask for one permission
@@ -159,8 +174,10 @@ class AddUpdateRecipeActivity : AppCompatActivity(), View.OnClickListener,
                         .centerCrop()
                         .placeholder(R.drawable.ic_add)
                         .into(mBinding.ivDishImage)
+
                     mImagePath = saveImageToInternalStorage(thumbnail)
                     Log.w("image path", mImagePath)
+
                     Glide.with(this)
                         .load(R.drawable.ic_edit)
                         .placeholder(R.drawable.ic_add)
@@ -187,6 +204,7 @@ class AddUpdateRecipeActivity : AppCompatActivity(), View.OnClickListener,
                                 Log.e("TAG", "Error loading image", e)
                                 return false
                             }
+
                             override fun onResourceReady(
                                 resource: Drawable?,
                                 model: Any?,
@@ -230,6 +248,17 @@ class AddUpdateRecipeActivity : AppCompatActivity(), View.OnClickListener,
             e.printStackTrace()
         }
         return file.absolutePath
+    }
+
+    private fun customListItemsDialog(title: String, itemsList: List<String>, selection: String) {
+        val customDialog = Dialog(this)
+        val binding: DialogCustomListBinding = DialogCustomListBinding.inflate(layoutInflater)
+        customDialog.setContentView(binding.root)
+        binding.tvTitle.text = title
+        binding.rvList.layoutManager = LinearLayoutManager(this)
+        val adapter = CustomListItemAdapter(this, itemsList, selection)
+        binding.rvList.adapter = adapter
+        customDialog.show()
     }
 
     companion object {
