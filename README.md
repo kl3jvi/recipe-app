@@ -25,9 +25,6 @@ Screenshots
 -----------
 [<img src="screenshots/fig1.jpg" width="30%"/>](fig1.png)
 [<img src="screenshots/fig2.jpg" width="30%"/>](fig2.png)
-![List of plants](screenshots/fig1.jpg "A list of recipes")
-![Plant details](screenshots/fig2.jpg "Details for a specific dish")
-![Plant details](screenshots/fig2.jpg "Details for a specific dish")
 
 Libraries Used
 --------------
