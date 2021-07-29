@@ -168,7 +168,6 @@ class AddUpdateRecipeActivity : AppCompatActivity(), View.OnClickListener,
             if (requestCode == REQUEST_IMAGE_CAPTURE) {
                 data?.extras?.let {
                     val thumbnail: Bitmap = data.extras!!.get("data") as Bitmap
-//                    mBinding.ivDishImage.setImageBitmap(thumbnail)
                     Glide.with(this)
                         .load(thumbnail)
                         .centerCrop()
@@ -182,8 +181,6 @@ class AddUpdateRecipeActivity : AppCompatActivity(), View.OnClickListener,
                         .load(R.drawable.ic_edit)
                         .placeholder(R.drawable.ic_add)
                         .into(mBinding.ivAddDishImage)
-
-
                 }
             }
 
@@ -218,7 +215,6 @@ class AddUpdateRecipeActivity : AppCompatActivity(), View.OnClickListener,
                                 }
                                 return false
                             }
-
                         })
                         .placeholder(R.drawable.ic_add)
                         .into(mBinding.ivDishImage)
@@ -227,7 +223,6 @@ class AddUpdateRecipeActivity : AppCompatActivity(), View.OnClickListener,
                         .load(R.drawable.ic_edit)
                         .placeholder(R.drawable.ic_add)
                         .into(mBinding.ivAddDishImage)
-
                 }
             }
         } else if (resultCode == Activity.RESULT_CANCELED) {
