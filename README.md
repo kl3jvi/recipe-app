@@ -24,8 +24,8 @@ Recipe app demonstrates utilizing these components to create a simple android ap
 Screenshots
 -----------
 
-![List of plants](screenshots/fig1.png "A list of recipes")
-![Plant details](screenshots/fig2.png "Details for a specific dish")
+![List of plants](screenshots/fig1.jpg "A list of recipes")
+![Plant details](screenshots/fig2.jpg "Details for a specific dish")
 
 
 Libraries Used
