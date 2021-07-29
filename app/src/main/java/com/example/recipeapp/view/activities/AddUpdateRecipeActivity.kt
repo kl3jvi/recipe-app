@@ -32,7 +32,10 @@ import com.example.recipeapp.databinding.DialogCustomListBinding
 import com.example.recipeapp.utils.Constants
 import com.example.recipeapp.view.adapters.CustomListItemAdapter
 import pub.devrel.easypermissions.EasyPermissions
-import java.io.*
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStream
 import java.util.*
 
 
@@ -47,8 +50,10 @@ class AddUpdateRecipeActivity : AppCompatActivity(), View.OnClickListener,
         mBinding = ActivityAddUpdateRecipeBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         mBinding.ivAddDishImage.setOnClickListener(this)
-        mBinding.typeEditText.setOnClickListener(this)
-        mBinding.categoryEditText.setOnClickListener(this)
+
+        mBinding.etType.setOnClickListener(this)
+        mBinding.etCategory.setOnClickListener(this)
+        mBinding.etCookingTime.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -59,12 +64,27 @@ class AddUpdateRecipeActivity : AppCompatActivity(), View.OnClickListener,
                     customImageSelectionDialog()
                     return
                 }
-
-                R.id.typeEditText -> {
+                R.id.et_type -> {
                     customListItemsDialog(
                         "Select Dish Type",
                         Constants.dishTypes(),
                         Constants.DISH_TYPE
+                    )
+                    return
+                }
+                R.id.et_category -> {
+                    customListItemsDialog(
+                        "Select Dish Category",
+                        Constants.dishCategories(),
+                        Constants.DISH_CATEGORY
+                    )
+                    return
+                }
+                R.id.et_cooking_time -> {
+                    customListItemsDialog(
+                        "Select Dish Cooking Time",
+                        Constants.dishTime(),
+                        Constants.DISH_COOKING_TIME
                     )
                     return
                 }
@@ -119,8 +139,6 @@ class AddUpdateRecipeActivity : AppCompatActivity(), View.OnClickListener,
             if (galleryIntent.resolveActivity(packageManager) != null) { // its always null
                 startActivityForResult(galleryIntent, REQUEST_IMAGE_CAPTURE)
             }
-
-
         } else {
             // Ask for one permission
             EasyPermissions.requestPermissions(

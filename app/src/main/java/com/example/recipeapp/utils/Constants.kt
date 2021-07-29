@@ -36,4 +36,23 @@ object Constants {
         list.add("Other")
         return list
     }
+
+    fun dishTime(): ArrayList<String> {
+        val list = ArrayList<String>()
+        list.add("5")
+        list.add("10")
+        list.add("15")
+        list.add("20")
+        list.add("25")
+        list.add("30")
+        list.add("45")
+        list.add("60")
+        list.add("70")
+        list.add("80")
+        list.add("90")
+        list.add("100")
+        list.add("110")
+        list.add("120")
+        return list
+    }
 }
