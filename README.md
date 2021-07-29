@@ -26,7 +26,7 @@ Screenshots
 
 ![List of plants](screenshots/fig1.jpg "A list of recipes")
 ![Plant details](screenshots/fig2.jpg "Details for a specific dish")
-
+![Plant details](screenshots/fig2.jpg "Details for a specific dish")
 
 Libraries Used
 --------------
