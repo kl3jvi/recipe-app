@@ -2,10 +2,10 @@ package com.example.recipeapp.view.adapters
 
 import android.app.Activity
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.databinding.ItemCustomListBinding
+import com.example.recipeapp.view.activities.AddUpdateRecipeActivity
 
 class CustomListItemAdapter(
     private val activity: Activity,
@@ -26,6 +26,11 @@ class CustomListItemAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = listItems[position]
         holder.tvText.text = item
+        holder.itemView.setOnClickListener {
+            if (activity is AddUpdateRecipeActivity) {
+                activity.selectedListItem(item, selection)
+            }
+        }
     }
 
     override fun getItemCount(): Int {

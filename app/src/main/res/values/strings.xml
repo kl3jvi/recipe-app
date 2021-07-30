@@ -11,7 +11,7 @@
     <string name="lbl_ingredients">Ingredients</string>
     <string name="lbl_cooking_time_in_minutes">Cooking Time In Minutes</string>
     <string name="lbl_direction_to_cook">Direction To Cook</string>
-    <string name="lbl_add_dish">ADD DISH</string>
+    <string name="lbl_add_dish">ADD RECIPE</string>
     <string name="recipe_add">Add Recipe</string>
 
     <string name="title_select_image">Select Image Action</string>
@@ -19,4 +19,13 @@
     <string name="lbl_gallery">Gallery</string>
 
     <string name="rationale_camera">This app needs access to your camera so you can take pictures.</string>
+
+    <string name="err_msg_select_recipe_image">Select Dish Image.</string>
+    <string name="err_msg_enter_recipe_title">Enter dish title.</string>
+    <string name="err_msg_select_recipe_type">Select dish type.</string>
+    <string name="err_msg_select_recipe_category">Select dish category.</string>
+    <string name="err_msg_enter_recipe_ingredients">Enter dish ingredients.</string>
+    <string name="err_msg_select_recipe_cooking_time">Select dish cooking time.</string>
+    <string name="err_msg_enter_recipe_cooking_instructions">Enter dish cooking instructions.</string>
+
 </resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -11,13 +12,13 @@
         android:background="?attr/selectableItemBackground"
         android:gravity="center"
         android:padding="@dimen/_10sdp"
+        android:textAllCaps="true"
         android:textColor="@color/primaryColor"
-        android:textSize="16sp"
-        android:text="Item Value"/>
+        android:textSize="@dimen/_16sdp"
+        tools:text="Item Value" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#e0e0e0"/>
-
+        android:background="#e9e9e9" />
 </LinearLayout>
