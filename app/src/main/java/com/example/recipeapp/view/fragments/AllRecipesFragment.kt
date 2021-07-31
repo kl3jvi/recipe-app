@@ -3,23 +3,26 @@ package com.example.recipeapp.view.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.recipeapp.R
+import com.example.recipeapp.application.FavDishApplication
 import com.example.recipeapp.databinding.FragmentAlldishesBinding
 import com.example.recipeapp.view.activities.AddUpdateRecipeActivity
-import com.example.recipeapp.viewmodel.HomeViewModel
+import com.example.recipeapp.view.adapters.FavDishAdapter
+import com.example.recipeapp.viewmodel.FavDishViewModel
+import com.example.recipeapp.viewmodel.FavDishViewModelFactory
 
 class AllRecipesFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
-    private var _binding: FragmentAlldishesBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private lateinit var mBinding: FragmentAlldishesBinding
+
+
+    private val mFavDishViewModel: FavDishViewModel by viewModels {
+        FavDishViewModelFactory((requireActivity().application as FavDishApplication).repository)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,23 +34,39 @@ class AllRecipesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+        mBinding = FragmentAlldishesBinding.inflate(inflater, container, false)
 
-        _binding = FragmentAlldishesBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        return mBinding.root
+    }
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        println("ckemi jam nga home")
-        return root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        mBinding.rvDishesList.layoutManager = GridLayoutManager(requireActivity(), 2)
+        val favDishAdapter = FavDishAdapter(this@AllRecipesFragment)
+        mBinding.rvDishesList.adapter = favDishAdapter
+
+        mFavDishViewModel.allDishesList.observe(viewLifecycleOwner) { dishes ->
+            dishes.let {
+                for (item in it) {
+                    if (it.isNotEmpty()) {
+                        mBinding.rvDishesList.visibility = View.VISIBLE
+                        mBinding.tvNoDishesAddedYet.visibility = View.GONE
+
+                        //it-> is the list with dishes we get from the observer
+                        favDishAdapter.dishesList(it)
+                    } else {
+                        mBinding.rvDishesList.visibility = View.GONE
+                        mBinding.tvNoDishesAddedYet.visibility = View.VISIBLE
+                    }
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
