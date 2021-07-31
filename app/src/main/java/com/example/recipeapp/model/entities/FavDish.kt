@@ -13,6 +13,7 @@ data class FavDish(
     @ColumnInfo val category: String,
     @ColumnInfo val ingredients: String,
     @ColumnInfo(name = "cooking_time") val cookingTime: String,
+    @ColumnInfo(name = "cooking_direction") val cookingDirection: String,
     @ColumnInfo(name = "favorite_dish") val favoriteDish: Boolean = false,
     @PrimaryKey(autoGenerate = true) val id: Int = 0
 )

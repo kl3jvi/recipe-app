@@ -18,6 +18,7 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,11 +29,15 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.recipeapp.R
+import com.example.recipeapp.application.FavDishApplication
 import com.example.recipeapp.databinding.ActivityAddUpdateRecipeBinding
 import com.example.recipeapp.databinding.CustomDialogBinding
 import com.example.recipeapp.databinding.DialogCustomListBinding
+import com.example.recipeapp.model.entities.FavDish
 import com.example.recipeapp.utils.Constants
 import com.example.recipeapp.view.adapters.CustomListItemAdapter
+import com.example.recipeapp.viewmodel.FavDishViewModel
+import com.example.recipeapp.viewmodel.FavDishViewModelFactory
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
 import java.io.FileOutputStream
@@ -47,7 +52,13 @@ class AddUpdateRecipeActivity : AppCompatActivity(), View.OnClickListener,
 
     private lateinit var mBinding: ActivityAddUpdateRecipeBinding
     private lateinit var mCustomListDialog: Dialog
+
     private var mImagePath: String = ""
+
+    private val mFavDishViewModel: FavDishViewModel by viewModels {
+        FavDishViewModelFactory((application as FavDishApplication).repository)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityAddUpdateRecipeBinding.inflate(layoutInflater)
@@ -153,11 +164,25 @@ class AddUpdateRecipeActivity : AppCompatActivity(), View.OnClickListener,
                             ).show()
                         }
                         else -> {
+                            val favDishDetails = FavDish(
+                                mImagePath,
+                                Constants.DISH_IMAGE_SOURCE_LOCAL,
+                                title,
+                                type,
+                                category,
+                                ingredients,
+                                cookingTimeInMinutes,
+                                cookingDirection,
+                                false
+                            )
+                            mFavDishViewModel.insert(favDishDetails)
                             Toast.makeText(
                                 this,
-                                "All the entries are valid",
+                                "You sucessfully added your dish details.",
                                 Toast.LENGTH_SHORT
                             ).show()
+                            Log.e("Insertion", "Success")
+                            finish()
                         }
                     }
                 }
