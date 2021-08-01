@@ -4,12 +4,18 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.4722222222222222" />
+        <entry key="app/src/main/res/drawable/ic_all_dishes.xml" value="0.18385416666666668" />
+        <entry key="app/src/main/res/drawable/ic_favorite_dish.xml" value="0.18385416666666668" />
+        <entry key="app/src/main/res/drawable/ic_random_dish.xml" value="0.18385416666666668" />
         <entry key="app/src/main/res/layout/activity_add_update_recipe.xml" value="0.31354166666666666" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.16354166666666667" />
         <entry key="app/src/main/res/layout/custom_dialog.xml" value="0.31354166666666666" />
         <entry key="app/src/main/res/layout/dialog_custom_list.xml" value="0.31354166666666666" />
         <entry key="app/src/main/res/layout/fragment_alldishes.xml" value="0.16354166666666667" />
+        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.16354166666666667" />
         <entry key="app/src/main/res/layout/item_custom_list.xml" value="0.31354166666666666" />
         <entry key="app/src/main/res/layout/item_dish_layout.xml" value="0.4" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.16354166666666667" />
       </map>
     </option>
   </component>
