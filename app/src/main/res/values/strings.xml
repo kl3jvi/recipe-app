@@ -29,5 +29,8 @@
     <string name="err_msg_enter_recipe_cooking_instructions">Enter dish cooking instructions.</string>
     <string name="label_no_dishes_added_yet">No dishes added yet!!!</string>
     <string name="dish_resource_image_name">Dish Image</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Dish details fragment layout</string>
+    <string name="title_dish_details">Dish Details</string>
 
 </resources>

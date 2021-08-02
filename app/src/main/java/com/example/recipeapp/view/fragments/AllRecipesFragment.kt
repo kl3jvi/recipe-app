@@ -5,11 +5,14 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.recipeapp.R
 import com.example.recipeapp.application.FavDishApplication
 import com.example.recipeapp.databinding.FragmentAlldishesBinding
+import com.example.recipeapp.model.entities.FavDish
 import com.example.recipeapp.view.activities.AddUpdateRecipeActivity
+import com.example.recipeapp.view.activities.MainActivity
 import com.example.recipeapp.view.adapters.FavDishAdapter
 import com.example.recipeapp.viewmodel.FavDishViewModel
 import com.example.recipeapp.viewmodel.FavDishViewModelFactory
@@ -64,10 +67,22 @@ class AllRecipesFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-
+    fun dishDetails(favDish: FavDish) {
+        findNavController().navigate(AllRecipesFragmentDirections.actionAllDishesToDishDetails(
+            favDish
+        ))
+        if (requireActivity() is MainActivity) {
+            (activity as MainActivity?)?.hideBottomNavBar()
+        }
     }
+
+    override fun onResume() {
+        super.onResume()
+        if (requireActivity() is MainActivity) {
+            (activity as MainActivity?)?.showBottomNavBar()
+        }
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_all_recipes, menu)

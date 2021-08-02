@@ -9,7 +9,11 @@
         android:id="@+id/navigation_all_dishes"
         android:name="com.example.recipeapp.view.fragments.AllRecipesFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_alldishes" />
+        tools:layout="@layout/fragment_alldishes">
+        <action
+            android:id="@+id/action_all_dishes_to_dish_details"
+            app:destination="@id/dishDetailsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_favorite_dishes"
@@ -22,4 +26,13 @@
         android:name="com.example.recipeapp.view.fragments.RandomDishFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_random_dish" />
+    <fragment
+        android:id="@+id/dishDetailsFragment"
+        android:name="com.example.recipeapp.view.fragments.DishDetailsFragment"
+        android:label="@string/title_dish_details"
+        tools:layout="@layout/fragment_dish_details">
+        <argument
+            android:name="dishDetails"
+            app:argType="com.example.recipeapp.model.entities.FavDish" />
+    </fragment>
 </navigation>
