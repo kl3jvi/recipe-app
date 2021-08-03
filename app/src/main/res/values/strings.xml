@@ -33,4 +33,6 @@
     <string name="hello_blank_fragment">Dish details fragment layout</string>
     <string name="title_dish_details">Dish Details</string>
 
+    <string name="lbl_estimate_cooking_time">The approx time required to cook the dish is %1$s minutes.</string>
+
 </resources>
