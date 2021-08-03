@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.example.recipeapp.databinding.ItemDishLayoutBinding
 import com.example.recipeapp.model.entities.FavDish
 import com.example.recipeapp.view.fragments.AllRecipesFragment
+import com.example.recipeapp.view.fragments.FavoriteDishesFragment
 
 class FavDishAdapter(private val fragment: Fragment) :
     RecyclerView.Adapter<FavDishAdapter.ViewHolder>() {
@@ -36,6 +37,8 @@ class FavDishAdapter(private val fragment: Fragment) :
 
         holder.itemView.setOnClickListener{
             if(fragment is AllRecipesFragment){
+                fragment.dishDetails(dish)
+            }else if (fragment is FavoriteDishesFragment){
                 fragment.dishDetails(dish)
             }
         }

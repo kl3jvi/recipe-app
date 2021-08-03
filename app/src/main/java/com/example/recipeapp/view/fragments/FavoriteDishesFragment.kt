@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.recipeapp.R
 import com.example.recipeapp.application.FavDishApplication
 import com.example.recipeapp.databinding.FragmentFavoriteDishBinding
+import com.example.recipeapp.model.entities.FavDish
+import com.example.recipeapp.view.activities.MainActivity
 import com.example.recipeapp.view.adapters.FavDishAdapter
 import com.example.recipeapp.viewmodel.FavDishViewModel
 import com.example.recipeapp.viewmodel.FavDishViewModelFactory
@@ -43,7 +46,6 @@ class FavoriteDishesFragment : Fragment() {
                     for (dish in it) {
                         mBinding.rvFavDishesList.visibility = View.VISIBLE
                         mBinding.tvNoFavDishesAddedYet.visibility = View.GONE
-
                         //it-> is the list with dishes we get from the observer
                         favDishAdapter.dishesList(it)
                     }
@@ -57,5 +59,19 @@ class FavoriteDishesFragment : Fragment() {
         }
     }
 
+    fun dishDetails(favDish: FavDish) {
+        findNavController().navigate(FavoriteDishesFragmentDirections.actionFavDishesToDishDetails(
+            favDish
+        ))
+        if (requireActivity() is MainActivity) {
+            (activity as MainActivity?)?.hideBottomNavBar()
+        }
+    }
 
+    override fun onResume() {
+        super.onResume()
+        if (requireActivity() is MainActivity) {
+            (activity as MainActivity?)?.showBottomNavBar()
+        }
+    }
 }
