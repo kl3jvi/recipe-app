@@ -14,14 +14,32 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/iv_dish_image"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_margin="1dp"
-            android:contentDescription="@string/dish_resource_image_name"
-            android:scaleType="fitXY"
-            android:src="@mipmap/ic_launcher" />
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_dish_image"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_margin="1dp"
+                android:contentDescription="@string/dish_resource_image_name"
+                android:scaleType="fitXY"
+                android:src="@mipmap/ic_launcher" />
+
+            <ImageView
+                android:id="@+id/ib_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_margin="5dp"
+                android:background="@android:color/transparent"
+                android:foreground="?attr/selectableItemBackground"
+                android:src="@drawable/ic_more"
+                android:contentDescription="@string/dish_resource_image_name"
+                android:scaleType="fitXY" />
+        </FrameLayout>
+
 
         <TextView
             android:id="@+id/tv_dish_title"

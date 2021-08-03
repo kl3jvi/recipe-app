@@ -21,6 +21,7 @@
         <entry key="app/src/main/res/layout/item_custom_list.xml" value="0.31354166666666666" />
         <entry key="app/src/main/res/layout/item_dish_layout.xml" value="0.4" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.16354166666666667" />
+        <entry key="app/src/main/res/menu/menu_adapter.xml" value="0.31354166666666666" />
         <entry key="app/src/main/res/menu/menu_all_recipes.xml" value="0.31354166666666666" />
       </map>
     </option>

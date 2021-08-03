@@ -36,5 +36,7 @@
     <string name="lbl_estimate_cooking_time">The approx time required to cook the dish is %1$s minutes.</string>
     <string name="cook_time_format">The approx time required to cook the dish is %1$s minutes.</string>
     <string name="fav_dishes_fragment_label">No favorite dishes added yet</string>
+    <string name="action_edit_dish">Edit Dish</string>
+    <string name="action_delete_dish">Delete Dish</string>
 
 </resources>
