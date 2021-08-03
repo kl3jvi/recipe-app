@@ -35,10 +35,11 @@ class FavDishAdapter(private val fragment: Fragment) :
             .into(holder.ivDishImage)
         holder.tvTitle.text = dish.title
 
-        holder.itemView.setOnClickListener{
-            if(fragment is AllRecipesFragment){
+        holder.itemView.setOnClickListener {
+            if (fragment is AllRecipesFragment) {
                 fragment.dishDetails(dish)
-            }else if (fragment is FavoriteDishesFragment){
+            }
+            if (fragment is FavoriteDishesFragment) {
                 fragment.dishDetails(dish)
             }
         }
