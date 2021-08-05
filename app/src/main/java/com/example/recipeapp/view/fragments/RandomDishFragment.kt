@@ -11,6 +11,7 @@ class RandomDishFragment : Fragment() {
 
     private var mBinding: FragmentRandomDishBinding? = null
 
+
     // This property is only valid between onCreateView and
     // onDestroyView.
 
@@ -27,5 +28,9 @@ class RandomDishFragment : Fragment() {
         return mBinding!!.root
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mBinding = null
+    }
 
 }
