@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -27,7 +28,8 @@ class AllRecipesFragment : Fragment() {
 
 
     private lateinit var mBinding: FragmentAlldishesBinding
-
+    private lateinit var mFavDishAdapter: FavDishAdapter
+    private lateinit var mCustomListDialog: Dialog
 
     private val mFavDishViewModel: FavDishViewModel by viewModels {
         FavDishViewModelFactory((requireActivity().application as FavDishApplication).repository)
@@ -52,8 +54,9 @@ class AllRecipesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         mBinding.rvDishesList.layoutManager = GridLayoutManager(requireActivity(), 2)
-        val favDishAdapter = FavDishAdapter(this@AllRecipesFragment)
-        mBinding.rvDishesList.adapter = favDishAdapter
+
+        mFavDishAdapter = FavDishAdapter(this)
+        mBinding.rvDishesList.adapter = mFavDishAdapter
 
         mFavDishViewModel.allDishesList.observe(viewLifecycleOwner) { dishes ->
             dishes.let {
@@ -63,7 +66,7 @@ class AllRecipesFragment : Fragment() {
                         mBinding.tvNoDishesAddedYet.visibility = View.GONE
 
                         //it-> is the list with dishes we get from the observer
-                        favDishAdapter.dishesList(it)
+                        mFavDishAdapter.dishesList(it)
                     } else {
                         mBinding.rvDishesList.visibility = View.GONE
                         mBinding.tvNoDishesAddedYet.visibility = View.VISIBLE
@@ -129,17 +132,59 @@ class AllRecipesFragment : Fragment() {
     }
 
     private fun filterDishes() {
-        val customListDialog = Dialog(requireActivity())
+        mCustomListDialog = Dialog(requireActivity())
         val binding: DialogCustomListBinding = DialogCustomListBinding.inflate(layoutInflater)
 
-        customListDialog.setContentView(binding.root)
+        mCustomListDialog.setContentView(binding.root)
         binding.tvTitle.text = getString(R.string.select_filter)
         val dishTypes = Constants.dishTypes()
         dishTypes.add(0, Constants.ALL_ITEMS)
         binding.rvList.layoutManager = LinearLayoutManager(requireActivity())
         val adapter =
-            CustomListItemAdapter(requireActivity(), dishTypes, Constants.FILTER_SELECTION)
+            CustomListItemAdapter(
+                requireActivity(),
+                this@AllRecipesFragment,
+                dishTypes,
+                Constants.FILTER_SELECTION
+            )
         binding.rvList.adapter = adapter
-        customListDialog.show()
+        mCustomListDialog.show()
+    }
+
+    fun filterSelection(filterItem: String) {
+        mCustomListDialog.dismiss()
+        Log.i("Filter Selection", filterItem)
+
+        if (filterItem == Constants.ALL_ITEMS) {
+            mFavDishViewModel.allDishesList.observe(viewLifecycleOwner) { dishes ->
+                dishes.let {
+                    for (item in it) {
+                        if (it.isNotEmpty()) {
+                            mBinding.rvDishesList.visibility = View.VISIBLE
+                            mBinding.tvNoDishesAddedYet.visibility = View.GONE
+                            //it-> is the list with dishes we get from the observer
+                            mFavDishAdapter.dishesList(it)
+                        } else {
+                            mBinding.rvDishesList.visibility = View.GONE
+                            mBinding.tvNoDishesAddedYet.visibility = View.VISIBLE
+                        }
+                    }
+                }
+            }
+        } else {
+            mFavDishViewModel.filteredList(filterItem).observe(viewLifecycleOwner) { dishes ->
+                dishes.let {
+                    if (it.isNotEmpty()) {
+                        mBinding.rvDishesList.visibility = View.VISIBLE
+                        mBinding.tvNoDishesAddedYet.visibility = View.GONE
+                        //it-> is the list with dishes we get from the observer
+                        mFavDishAdapter.dishesList(it)
+                    } else {
+                        mBinding.rvDishesList.visibility = View.GONE
+                        mBinding.tvNoDishesAddedYet.visibility = View.VISIBLE
+                    }
+                }
+            }
+        }
     }
 }
