@@ -38,5 +38,7 @@
     <string name="fav_dishes_fragment_label">No favorite dishes added yet</string>
     <string name="action_edit_dish">Edit Dish</string>
     <string name="action_delete_dish">Delete Dish</string>
+    <string name="edit_dish_title">Edit Dish</string>
+    <string name="lbl_update_dish">Update Dish</string>
 
 </resources>

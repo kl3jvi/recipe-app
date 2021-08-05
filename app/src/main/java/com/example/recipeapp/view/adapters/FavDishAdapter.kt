@@ -1,5 +1,6 @@
 package com.example.recipeapp.view.adapters
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,8 @@ import com.bumptech.glide.Glide
 import com.example.recipeapp.R
 import com.example.recipeapp.databinding.ItemDishLayoutBinding
 import com.example.recipeapp.model.entities.FavDish
+import com.example.recipeapp.utils.Constants
+import com.example.recipeapp.view.activities.AddUpdateRecipeActivity
 import com.example.recipeapp.view.fragments.AllRecipesFragment
 import com.example.recipeapp.view.fragments.FavoriteDishesFragment
 
@@ -54,7 +57,13 @@ class FavDishAdapter(private val fragment: Fragment) :
             popupMenu.menuInflater.inflate(R.menu.menu_adapter, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener {
                 if (it.itemId == R.id.action_edit_dish) {
-                    Log.e("yoy have clicked on", dish.title)
+
+                    val intent =
+                        Intent(fragment.requireActivity(), AddUpdateRecipeActivity::class.java)
+                    intent.putExtra(Constants.EXTRA_DISH_DETAILS, dish)
+                    fragment.requireActivity().startActivity(intent)
+
+
                 } else if (it.itemId == R.id.action_edit_dish) {
                     Log.e("yoy have clicked on", dish.title)
                 }
