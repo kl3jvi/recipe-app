@@ -40,5 +40,6 @@
     <string name="action_delete_dish">Delete Dish</string>
     <string name="edit_dish_title">Edit Dish</string>
     <string name="lbl_update_dish">Update Dish</string>
+    <string name="select_filter">Select Filter</string>
 
 </resources>

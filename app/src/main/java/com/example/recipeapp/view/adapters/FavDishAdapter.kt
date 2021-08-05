@@ -1,7 +1,6 @@
 package com.example.recipeapp.view.adapters
 
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +20,7 @@ class FavDishAdapter(private val fragment: Fragment) :
     RecyclerView.Adapter<FavDishAdapter.ViewHolder>() {
 
     private var dishes: List<FavDish> = listOf()
+
 
     class ViewHolder(view: ItemDishLayoutBinding) : RecyclerView.ViewHolder(view.root) {
         val ivDishImage = view.ivDishImage
@@ -64,8 +64,12 @@ class FavDishAdapter(private val fragment: Fragment) :
                     fragment.requireActivity().startActivity(intent)
 
 
-                } else if (it.itemId == R.id.action_edit_dish) {
-                    Log.e("yoy have clicked on", dish.title)
+                } else if (it.itemId == R.id.action_delete_dish) {
+                    if (fragment is AllRecipesFragment) {
+                        fragment.deleteDish(dish)
+                    }
+
+
                 }
                 true
             }

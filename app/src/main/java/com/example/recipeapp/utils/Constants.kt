@@ -8,6 +8,8 @@ object Constants {
     const val DISH_IMAGE_SOURCE_LOCAL: String = "Local"
     const val DISH_IMAGE_SOURCE_ONLINE: String = "Online"
     const val EXTRA_DISH_DETAILS: String = "DishDetails"
+    const val ALL_ITEMS: String = "All"
+    const val FILTER_SELECTION: String = "FilterSelection"
 
     fun dishTypes(): ArrayList<String> {
         val list = ArrayList<String>()
