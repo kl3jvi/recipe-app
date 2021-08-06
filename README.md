@@ -23,8 +23,10 @@ Recipe app demonstrates utilizing these components to create a simple android ap
 
 Screenshots
 -----------
-[<img src="screenshots/fig1.jpg" width="30%"/>](fig1.png)
-[<img src="screenshots/fig2.jpg" width="30%"/>](fig2.png)
+[<img src="screenshots/fig1.jpeg" width="25%"/>](fig1.png)
+[<img src="screenshots/fig2.jpeg" width="25%"/>](fig2.png)
+[<img src="screenshots/fig3.jpeg" width="25%"/>](fig3.png)
+[<img src="screenshots/fig4.jpeg" width="25%"/>](fig4.png)
 
 Libraries Used
 --------------
