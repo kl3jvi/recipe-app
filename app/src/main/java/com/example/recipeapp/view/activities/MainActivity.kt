@@ -1,6 +1,7 @@
 package com.example.recipeapp.view.activities
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -10,7 +11,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.recipeapp.R
 import com.example.recipeapp.databinding.ActivityMainBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
@@ -44,9 +44,11 @@ class MainActivity : AppCompatActivity() {
     fun hideBottomNavBar() {
         binding.navView.clearAnimation()
         binding.navView.animate().translationY(binding.navView.height.toFloat()).duration = 300
+        binding.navView.visibility = View.GONE
     }
 
     fun showBottomNavBar() {
+        binding.navView.visibility = View.VISIBLE
         binding.navView.clearAnimation()
         binding.navView.animate().translationY(0f).duration = 300
     }
